@@ -5,7 +5,11 @@ namespace CleanArchitecture.Domain.Users;
 
 public sealed class User : Entity
 {
-    private User(Guid id, Nombre nombre, Apellido apellido, Email email) : base(id)
+    private User(
+        Guid id, 
+        Nombre nombre, 
+        Apellido apellido, 
+        Email email) : base(id)
     {
         Nombre = nombre;
         Apellido = apellido;

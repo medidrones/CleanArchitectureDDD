@@ -4,8 +4,15 @@ namespace CleanArchitecture.Domain.Vehiculos;
 
 public sealed class Vehiculo : Entity
 {
-    public Vehiculo(Guid id, Modelo modelo, Vin vin, Moneda precio, Moneda mantenimiento, 
-        DateTime? fechaUltimoAlquiler, List<Accesorio> accesorios, Direccion? direccion) : base(id)
+    public Vehiculo(
+        Guid id, 
+        Modelo modelo, 
+        Vin vin, 
+        Moneda precio, 
+        Moneda mantenimiento, 
+        DateTime? fechaUltimoAlquiler, 
+        List<Accesorio> accesorios, 
+        Direccion? direccion) : base(id)
     {
         Modelo = modelo;
         Vin = vin;
