@@ -28,7 +28,7 @@ public sealed class Vehiculo : Entity
     public Direccion? Direccion { get; private set; }
     public Moneda? Precio { get; private set; }    
     public Moneda? Mantenimiento { get; private set; }   
-    public DateTime? FechaUltimaAlquiler { get; private set; }
+    public DateTime? FechaUltimaAlquiler { get; internal set; }
 
     public List<Accesorio> Accesorios { get; private set; } = new();
 }
