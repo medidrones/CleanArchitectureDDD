@@ -36,10 +36,7 @@ public class Result<TValue> : Result
 {
     private readonly TValue? value;
 
-    protected internal Result(TValue? value, bool isSuccess, Error error) : base(isSuccess, error)
-    {
-        this.value = value;
-    }
+    protected internal Result(TValue? value, bool isSuccess, Error error) : base(isSuccess, error) => this.value = value;
 
     [NotNull]
     public TValue? Value => IsSuccess 

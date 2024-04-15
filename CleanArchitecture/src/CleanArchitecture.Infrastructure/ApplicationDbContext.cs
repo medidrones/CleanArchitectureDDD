@@ -9,14 +9,10 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 {
     private readonly IPublisher _publisher;
 
-    public ApplicationDbContext(IPublisher publisher)
+    public ApplicationDbContext(DbContextOptions options, IPublisher publisher) : base(options)
     {
         _publisher = publisher;
-    }
-
-    public ApplicationDbContext(DbContextOptions options) : base(options)
-    {
-    }
+    }   
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,7 +26,7 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         {
             var result = await base.SaveChangesAsync(cancellationToken);
 
-            await PublishDomainEventAsync();
+            await PublishDomainEventsAsync();
 
             return result;
         }
@@ -40,11 +36,11 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         }
     }
 
-    private async Task PublishDomainEventAsync()
+    private async Task PublishDomainEventsAsync()
     {
         var domainEvents = ChangeTracker
             .Entries<Entity>()
-            .Select(entity => entity.Entity)
+            .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
                 var domainEvents = entity.GetDomainEvents();

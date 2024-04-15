@@ -5,6 +5,10 @@ namespace CleanArchitecture.Domain.Users;
 
 public sealed class User : Entity
 {
+    private User()
+    {
+    }
+
     private User(
         Guid id, 
         Nombre nombre, 
@@ -18,8 +22,7 @@ public sealed class User : Entity
 
     public Nombre? Nombre { get; private set; }
     public Apellido? Apellido { get; private set; }
-    public Email Email { get; }
-    public Email? Em { get; private set; }
+    public Email? Email { get; private set; }   
 
     public static User Create(Nombre nombre, Apellido apellido, Email email)
     {

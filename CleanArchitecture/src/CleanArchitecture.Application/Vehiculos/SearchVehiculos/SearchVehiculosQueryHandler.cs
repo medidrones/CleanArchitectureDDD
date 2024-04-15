@@ -31,30 +31,30 @@ internal sealed class SearchVehiculosQueryHandler : IQueryHandler<SearchVehiculo
 
         using var connection = _sqlConnectionFactory.CreateConnection();
 
-        const string sql = """"
-            SELECT
-                a.id AS Id,
-                a.modelo AS Modelo,
-                a.vin AS Vin,
-                a.precio_monto AS Precio,
-                a.precio_tipo_moneda AS TipoMoneda,
-                a.direccion_pais AS Pais,
-                a.direccion_departamento AS Departamento,
-                a.direccion_provincia AS Provincia,
-                a.direccion_ciudad AS Ciudad,
-                a.direccion_calle AS Calle
-            FROM vehiculos AS a
-            WHERE NOT EXISTS\
-            (
-                SELECT 1
-                FROM alquileres AS b
-                WHERE 
-                    b.vehiculo_id = a.id
-                    b.duracion_inicio <= @EndDate AND
-                    b.duracion_final <= @StartDate AND
-                    b.status = ANY(@ActiveAlquilerStatuses)
-            )
-            """";
+        const string sql = """
+               SELECT
+                a.id as Id,
+                a.modelo as Modelo,
+                a.vin as Vin,
+                a.precio_monto as Precio,
+                a.precio_tipo_moneda as TipoMoneda,
+                a.direccion_pais as Pais,
+                a.direccion_departamento as Departamento,
+                a.direccion_provincia as Provincia,
+                a.direccion_ciudad as Ciudad,
+                a.direccion_calle as Calle
+             FROM vehiculos AS a
+             WHERE NOT EXISTS
+             (
+                    SELECT 1 
+                    FROM alquileres AS b
+                    WHERE 
+                        b.vehiculo_id = a.id  AND
+                        b.duracion_inicio <= @EndDate AND
+                        b.duracion_fin  >= @StartDate AND
+                        b.status = ANY(@ActiveAlquilerStatuses)
+             )      
+        """;
 
         var vehiculos = await connection.QueryAsync<VehiculoResponse, DireccionResponse, VehiculoResponse>(
             sql, (vehiculo, direccion) => {

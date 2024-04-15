@@ -19,7 +19,7 @@ internal sealed class GetAlquilerQueryHandler : IQueryHandler<GetAlquilerQuery, 
         using var connection = _sqlConnectionFactory.CreateConnection();
 
         var sql = """
-            SELECT 
+           SELECT
                 id AS Id,
                 vehiculo_id AS VehiculoId,
                 user_id AS UserId,
@@ -35,10 +35,10 @@ internal sealed class GetAlquilerQueryHandler : IQueryHandler<GetAlquilerQuery, 
                 duracion_inicio AS DuracionInicio,
                 duracion_final AS DuracionFinal,
                 fecha_creacion AS FechaCreacion
-            FROM alquileres WHERE id=@AlquilerId
-            """;
+           FROM alquileres WHERE id=@AlquilerId  
+        """;
 
-        var alquiler = await connection.QueryFirstOrDefaultAsync<AlquilerResponse>(sql, new { request.AlquilerId });
+        var alquiler = await connection.QueryFirstOrDefaultAsync<AlquilerResponse>(sql, new {request.AlquilerId});
 
         return alquiler!;
     }

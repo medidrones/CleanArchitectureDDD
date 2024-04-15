@@ -3,7 +3,8 @@
 public sealed record DateRange
 {
     private DateRange()
-    {}
+    {
+    }
 
     public DateOnly Inicio { get; init; }
     public DateOnly Fin { get; init; }

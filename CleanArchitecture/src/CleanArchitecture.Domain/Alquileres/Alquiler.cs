@@ -7,6 +7,10 @@ namespace CleanArchitecture.Domain.Alquileres;
 
 public sealed class Alquiler : Entity
 {
+    private Alquiler()
+    {
+    }
+
     private Alquiler(
         Guid id, 
         Guid vehiculoId, 
@@ -28,7 +32,7 @@ public sealed class Alquiler : Entity
         PrecioTotal = precioTotal;
         Status = status;
         FechaCreacion = fechaCreacion;
-    }
+    }    
 
     public Guid VehiculoId { get; private set; }
     public Guid UserId { get; private set; }
@@ -92,7 +96,7 @@ public sealed class Alquiler : Entity
         }
 
         Status = AlquilerStatus.Rechazado;
-        FechaConfirmacion = utcNow;
+        FechaDenegacion = utcNow;
 
         RaiseDomainEvent(new AlquilerRechazadoDomainEvent(Id));
 
