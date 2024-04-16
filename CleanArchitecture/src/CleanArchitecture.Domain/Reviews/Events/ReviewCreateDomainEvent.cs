@@ -3,4 +3,4 @@
 namespace CleanArchitecture.Domain.Reviews.Events;
 
 public sealed record ReviewCreateDomainEvent(
-    Guid AlquilerId) : IDomainEvent;
+    ReviewId ReviewId) : IDomainEvent;

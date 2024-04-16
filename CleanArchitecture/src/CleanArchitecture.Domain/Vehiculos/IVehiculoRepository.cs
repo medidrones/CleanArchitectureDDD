@@ -2,5 +2,5 @@
 
 public interface IVehiculoRepository
 {
-    Task<Vehiculo?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Vehiculo?> GetByIdAsync(VehiculoId id, CancellationToken cancellationToken = default);
 }

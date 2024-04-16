@@ -1,20 +1,21 @@
 ﻿using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Alquileres.Events;
 using CleanArchitecture.Domain.Shared;
+using CleanArchitecture.Domain.Users;
 using CleanArchitecture.Domain.Vehiculos;
 
 namespace CleanArchitecture.Domain.Alquileres;
 
-public sealed class Alquiler : Entity
+public sealed class Alquiler : Entity<AlquilerId>
 {
     private Alquiler()
     {
     }
 
     private Alquiler(
-        Guid id, 
-        Guid vehiculoId, 
-        Guid userId, 
+        AlquilerId id, 
+        VehiculoId vehiculoId, 
+        UserId userId, 
         DateRange? duracion, 
         Moneda? precioPorPeriodo, 
         Moneda? mantenimiento, 
@@ -34,8 +35,8 @@ public sealed class Alquiler : Entity
         FechaCreacion = fechaCreacion;
     }    
 
-    public Guid VehiculoId { get; private set; }
-    public Guid UserId { get; private set; }
+    public VehiculoId? VehiculoId { get; private set; }
+    public UserId? UserId { get; private set; }
     public Moneda? PrecioPorPeriodo { get; private set; }
     public Moneda? Mantenimiento { get; private set; }
     public Moneda? Accesorios { get; private set; }
@@ -50,15 +51,15 @@ public sealed class Alquiler : Entity
 
     public static Alquiler Reservar(
         Vehiculo vehiculo, 
-        Guid userId, 
+        UserId userId, 
         DateRange duracion, 
         DateTime fechaCreacion,
         PrecioService precioService)
     {
         var precioDetalle = precioService.CalcularPrecio(vehiculo, duracion);
         var alquiler = new Alquiler(
-            Guid.NewGuid(), 
-            vehiculo.Id, 
+            AlquilerId.New(), 
+            vehiculo.Id!, 
             userId, duracion, 
             precioDetalle.PrecioPorPeriodo, 
             precioDetalle.Mantenimiento, 
@@ -83,7 +84,7 @@ public sealed class Alquiler : Entity
         Status = AlquilerStatus.Confirmado;
         FechaConfirmacion = utcNow;
 
-        RaiseDomainEvent(new AlquilerConfirmadoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerConfirmadoDomainEvent(Id!));
 
         return Result.Success();
     }
@@ -98,7 +99,7 @@ public sealed class Alquiler : Entity
         Status = AlquilerStatus.Rechazado;
         FechaDenegacion = utcNow;
 
-        RaiseDomainEvent(new AlquilerRechazadoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerRechazadoDomainEvent(Id!));
 
         return Result.Success();
     }
@@ -120,7 +121,7 @@ public sealed class Alquiler : Entity
         Status = AlquilerStatus.Cancelado;
         FechaCancelacion = utcNow;
 
-        RaiseDomainEvent(new AlquilerCanceladoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerCanceladoDomainEvent(Id!));
 
         return Result.Success();
     }
@@ -135,7 +136,7 @@ public sealed class Alquiler : Entity
         Status = AlquilerStatus.Completado;
         FechaCompletado = utcNow;
 
-        RaiseDomainEvent(new AlquilerCompletadoDomainEvent(Id));
+        RaiseDomainEvent(new AlquilerCompletadoDomainEvent(Id!));
 
         return Result.Success();
     }
