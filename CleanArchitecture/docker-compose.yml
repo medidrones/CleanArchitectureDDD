@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  cleanarchitecturedb:
+    image: postgres:16.0
+
+  cleanarchitectureapi:
+    image: ${DOCKER_REGISTRY-}cleanarchitectureapi
+    build:
+      context: .
+      dockerfile: src/CleanArchitecture.Api/Dockerfile
