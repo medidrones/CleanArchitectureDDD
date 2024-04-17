@@ -30,5 +30,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(password => password!.Value, value => new PasswordHash(value));
 
         builder.HasIndex(user => user.Email).IsUnique();
+        builder.HasMany(x => x.Roles)
+            .WithMany()
+            .UsingEntity<UserRole>();
     }
 }
