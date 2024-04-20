@@ -16,11 +16,19 @@ services:
   cleanarchitectureapi:
     container_name: cleanarchitectureapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=DockerDevelop
       - ASPNETCORE_URLS=http://+:5000
       - "ConnectionStrings__ConnectionString=Host=cleanarchitecturedb;Port=5432;Database=cleanarchitecture;Username=postgres;Password=postgres;"
     depends_on:
       - cleanarchitecturedb
     ports:
       - 80:5000
+      
+  serilogseq: 
+    container_name: serilogseq
+    environment: 
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
       

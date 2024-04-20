@@ -12,7 +12,7 @@ public sealed class RolePermissionConfiguration : IEntityTypeConfiguration<RoleP
         builder.ToTable("roles_permissions");
         builder.HasKey(x => new { x.RoleId, x.PermissionId });
         builder.Property(x => x.PermissionId)
-            .HasConversion(permissionId => permissionId!.Value, value => new Domain.Permissions.PermissionId(value));
+            .HasConversion(permissionId => permissionId!.Value, value => new PermissionId(value));
 
         builder.HasData(
             Create(Role.Cliente, PermissionEnum.ReadUser),

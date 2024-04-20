@@ -6,8 +6,11 @@ using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((contex, configuration) => configuration.ReadFrom.Configuration(contex.Configuration));
 
 builder.Services.AddControllers();
 
@@ -17,7 +20,7 @@ builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Services.AddTransient<IJwtProvider, JwtProvider>();
 builder.Services.AddAuthorization();
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
-builder.Services.AddScoped<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,6 +40,8 @@ await app.ApplyMigration();
 
 app.SeedData();
 app.SeedDataAuthentication();
+app.UseRequestContextLogging();
+app.UseSerilogRequestLogging();
 app.UseCustomExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
