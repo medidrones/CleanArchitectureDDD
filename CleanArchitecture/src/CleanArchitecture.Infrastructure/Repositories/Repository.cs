@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Domain.Abstractions;
+using CleanArchitecture.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.Repositories;
@@ -23,5 +24,20 @@ internal abstract class Repository<TEntity, TEntityId>
     public void Add(TEntity entity)
     {
         DbContext.Add(entity);
+    }
+
+    public IQueryable<TEntity> ApplySpecification(ISpecification<TEntity, TEntityId> spec) 
+    {
+        return SpecificationEvaluator<TEntity, TEntityId>.GetQuery(DbContext.Set<TEntity>().AsQueryable(), spec);
+    }
+
+    public async Task<IReadOnlyList<TEntity>> GetAllWithSpec(ISpecification<TEntity, TEntityId> spec)
+    {
+        return await ApplySpecification(spec).ToListAsync();
+    }
+
+    public async Task<int> CountAsync(ISpecification<TEntity, TEntityId> spec)
+    {
+        return await ApplySpecification(spec).CountAsync();
     }
 }

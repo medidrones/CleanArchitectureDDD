@@ -19,7 +19,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Docker": {
+    "DockerLocal": {
       "commandName": "Docker",     
       "launchBrowser": true,
       "launchUrl": "{Schema}://localhost:{ServicePort}/api/values",
