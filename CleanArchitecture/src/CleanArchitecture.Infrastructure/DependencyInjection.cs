@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Abstractions.Clock;
 using CleanArchitecture.Application.Abstractions.Data;
 using CleanArchitecture.Application.Abstractions.Email;
+using CleanArchitecture.Application.Paginations;
 using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Alquileres;
 using CleanArchitecture.Domain.Users;
@@ -32,6 +33,8 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IPaginationRepository, UserRepository>();
+        services.AddScoped<IPaginationVehiculoRepository, VehiculoRepository>();
         services.AddScoped<IVehiculoRepository, VehiculoRepository>();
         services.AddScoped<IAlquilerRepository, AlquilerRepository>();
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
