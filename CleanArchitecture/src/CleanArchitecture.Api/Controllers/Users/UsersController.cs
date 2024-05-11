@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Users.GetUsersPagination;
+﻿using CleanArchitecture.Application.Users.GetUsersDapperPagination;
+using CleanArchitecture.Application.Users.GetUsersPagination;
 using CleanArchitecture.Application.Users.LoginUser;
 using CleanArchitecture.Application.Users.RegisterUsers;
 using CleanArchitecture.Domain.Abstractions;
@@ -56,6 +57,17 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(PaginationResult<User, UserId>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<PagedResults<User, UserId>>> GetPagination(
         [FromQuery] GetUsersPaginationQuery paginationQuery)
+    {
+        var resultados = await _sender.Send(paginationQuery);
+
+        return Ok(resultados);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("getPaginationDapper", Name = "GetPaginationDapper")]
+    [ProducesResponseType(typeof(PagedDapperResults<UserPaginationData>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<PagedDapperResults<UserPaginationData>>> GetPaginationDapper(
+        [FromQuery] GetUsersDapperPaginationQuery paginationQuery)
     {
         var resultados = await _sender.Send(paginationQuery);
 
