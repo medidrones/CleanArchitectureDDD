@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Abstractions.Clock;
+﻿using Asp.Versioning;
+using CleanArchitecture.Application.Abstractions.Clock;
 using CleanArchitecture.Application.Abstractions.Data;
 using CleanArchitecture.Application.Abstractions.Email;
 using CleanArchitecture.Application.Paginations;
@@ -21,6 +22,18 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1);
+            options.ReportApiVersions = true;
+            options.ApiVersionReader = new UrlSegmentApiVersionReader();
+        }).AddMvc()
+        .AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'V";
+            options.SubstituteApiVersionInUrl = true;
+        });
+
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient<IEmailService, EmailService>();
 

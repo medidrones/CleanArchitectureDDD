@@ -1,4 +1,6 @@
-﻿using CleanArchitecture.Application.Alquileres.GetAlquiler;
+﻿using Asp.Versioning;
+using CleanArchitecture.Api.Utils;
+using CleanArchitecture.Application.Alquileres.GetAlquiler;
 using CleanArchitecture.Application.Alquileres.ReservarAlquiler;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CleanArchitecture.Api.Controllers.Alquileres;
 
 [ApiController]
-[Route("api/alquileres")]
+[ApiVersion(ApiVersions.V1)]
+[Route("api/v{version:apiVersion}/alquileres")]
 public class AlquileresController : ControllerBase
 {
     private readonly ISender _sender;

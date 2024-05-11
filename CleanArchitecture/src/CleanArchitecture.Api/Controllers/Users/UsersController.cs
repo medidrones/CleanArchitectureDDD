@@ -1,4 +1,6 @@
-﻿using CleanArchitecture.Application.Users.GetUsersDapperPagination;
+﻿using Asp.Versioning;
+using CleanArchitecture.Api.Utils;
+using CleanArchitecture.Application.Users.GetUsersDapperPagination;
 using CleanArchitecture.Application.Users.GetUsersPagination;
 using CleanArchitecture.Application.Users.LoginUser;
 using CleanArchitecture.Application.Users.RegisterUsers;
@@ -12,7 +14,8 @@ using System.Net;
 namespace CleanArchitecture.Api.Controllers.Users;
 
 [ApiController]
-[Route("api/users")]
+[ApiVersion(ApiVersions.V1)]
+[Route("api/v{version:apiVersion}/users")]
 public class UsersController : ControllerBase
 {
     private readonly ISender _sender;
@@ -24,7 +27,8 @@ public class UsersController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserRequest request, CancellationToken cancellationToken)
+    [MapToApiVersion(ApiVersions.V1)]
+    public async Task<IActionResult> LoginV1([FromBody] LoginUserRequest request, CancellationToken cancellationToken)
     {
         var command = new LoginCommand(request.Email, request.Password);
         var result = await _sender.Send(command, cancellationToken);
@@ -35,7 +39,7 @@ public class UsersController : ControllerBase
         }
 
         return Ok(result.Value);
-    }
+    }   
 
     [AllowAnonymous]
     [HttpPost("register")]
@@ -54,7 +58,7 @@ public class UsersController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("getPagination", Name = "PaginationUsers")]
-    [ProducesResponseType(typeof(PaginationResult<User, UserId>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(PagedResults<User, UserId>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<PagedResults<User, UserId>>> GetPagination(
         [FromQuery] GetUsersPaginationQuery paginationQuery)
     {
