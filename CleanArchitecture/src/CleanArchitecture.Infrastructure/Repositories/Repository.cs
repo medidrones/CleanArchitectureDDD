@@ -20,11 +20,10 @@ internal abstract class Repository<TEntity, TEntityId>
 
     public async Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken cancellationToken = default)
     {
-        return await DbContext.Set<TEntity>()
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
-    public void Add(TEntity entity)
+    public virtual void Add(TEntity entity)
     {
         DbContext.Add(entity);
     }
