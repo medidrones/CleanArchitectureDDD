@@ -1,3 +1,6 @@
+using Asp.Versioning.Builder;
+using Asp.Versioning;
+using CleanArchitecture.Api.Controllers.Alquileres;
 using CleanArchitecture.Api.Documentation;
 using CleanArchitecture.Api.Extensions;
 using CleanArchitecture.Api.OptionsSetup;
@@ -61,5 +64,16 @@ app.UseCustomExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+ApiVersionSet apiVersion = app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1))
+            .ReportApiVersions()
+            .Build();
+
+var routeGroupBuilder = app
+    .MapGroup("api/v{version:apiVersion}")
+    .WithApiVersionSet(apiVersion);
+
+routeGroupBuilder.MapAlquilerEndpoints();
 
 app.Run();

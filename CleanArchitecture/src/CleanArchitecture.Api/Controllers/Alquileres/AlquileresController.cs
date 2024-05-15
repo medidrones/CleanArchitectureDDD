@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+﻿/*using Asp.Versioning;
 using CleanArchitecture.Api.Utils;
 using CleanArchitecture.Application.Alquileres.GetAlquiler;
 using CleanArchitecture.Application.Alquileres.ReservarAlquiler;
@@ -19,7 +19,7 @@ public class AlquileresController : ControllerBase
         _sender = sender;
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetAlquiler(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetAlquilerQuery(id);
@@ -47,3 +47,4 @@ public class AlquileresController : ControllerBase
         return CreatedAtAction(nameof(GetAlquiler), new {id = resultado.Value}, resultado.Value);
     }
 }
+*/
