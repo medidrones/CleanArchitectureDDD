@@ -20,4 +20,8 @@
     <ProjectReference Include="..\CleanArchitecture.Domain\CleanArchitecture.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	  <InternalsVisibleTo Include="CleanArchitecture.Application.UnitTests" />
+  </ItemGroup>
+
 </Project>

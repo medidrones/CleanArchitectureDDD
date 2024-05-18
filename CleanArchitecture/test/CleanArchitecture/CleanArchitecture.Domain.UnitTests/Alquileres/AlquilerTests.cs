@@ -15,14 +15,18 @@ public class AlquilerTests : BaseTest
     [Fact]
     public void Reservar_Should_RaiseAlquilerReservarDomainEvent()
     {
+        //Arrange
         var user = User.Create(UserMock.Nombre, UserMock.Apellido, UserMock.Email, UserMock.Password);
         var precio = new Moneda(10.0m, TipoMoneda.Usd);
         var duracion = DateRange.Create(new DateOnly(2024,1,1), new DateOnly(2025,1,1));
         var vehiculo = VehiculoMock.Create(precio);
         var precioService = new PrecioService();
-        var alquiler = Alquiler.Reservar(vehiculo, user.Id!, duracion, DateTime.UtcNow, precioService);
-        var alquilerReservarDomainEvent = AssertDomainEventWasPublished<AlquilerReservadoDomainEvent>(alquiler);
 
+        //Act
+        var alquiler = Alquiler.Reservar(vehiculo, user.Id!, duracion, DateTime.UtcNow, precioService);
+
+        //Assert
+        var alquilerReservarDomainEvent = AssertDomainEventWasPublished<AlquilerReservadoDomainEvent>(alquiler);
         alquilerReservarDomainEvent.AlquilerId.Should().Be(alquiler.Id);
     }
 }
