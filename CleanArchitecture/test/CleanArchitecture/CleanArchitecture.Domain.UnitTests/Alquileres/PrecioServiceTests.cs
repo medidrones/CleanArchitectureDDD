@@ -26,7 +26,7 @@ public class PrecioServiceTests
     }
 
     [Fact]
-    public void CalcularPrecio_Should_ReturnCorrectPrecioTotal_WhenMantinimientoIsIncluded()
+    public void CalcularPrecio_Should_ReturnCorrectPrecioTotal_When_MantinimientoIsIncluded()
     {
         //Arrange
         var precio = new Moneda(10.0m, TipoMoneda.Usd);
