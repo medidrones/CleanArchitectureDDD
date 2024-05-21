@@ -4,7 +4,7 @@ namespace CleanArchitecture.Domain.Permissions;
 
 public sealed class Permission : Entity<PermissionId>
 {
-    public Permission()
+    private Permission()
     {
     }
 
