@@ -18,7 +18,7 @@ public class SearchVehiculosTests : BaseIntegrationTest
         var query = new SearchVehiculosQuery(new DateOnly(2023,1,1), new DateOnly(2022,1,1));
 
         //Act
-        var resultado = await sender.Send(query);
+        var resultado = await Sender.Send(query);
 
         //Assert
         resultado.Value.Should().BeEmpty();
@@ -31,7 +31,7 @@ public class SearchVehiculosTests : BaseIntegrationTest
         var query = new SearchVehiculosQuery(new DateOnly(2023, 1, 1), new DateOnly(2026, 1, 1));
 
         //Act
-        var resultado = await sender.Send(query);
+        var resultado = await Sender.Send(query);
 
         //Assert
         resultado.IsSuccess.Should().BeTrue();

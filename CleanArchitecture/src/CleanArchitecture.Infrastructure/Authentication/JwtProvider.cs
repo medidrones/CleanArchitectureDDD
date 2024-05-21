@@ -45,7 +45,7 @@ public sealed class JwtProvider : IJwtProvider
 
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id!.ToString()),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id!.Value.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email!.Value)
         };
 

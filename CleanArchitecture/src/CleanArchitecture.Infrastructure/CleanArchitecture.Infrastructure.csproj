@@ -28,6 +28,7 @@
 	
   <ItemGroup>
     <InternalsVisibleTo Include="CleanArchitecture.Application.IntegrationTests" />
+    <InternalsVisibleTo Include="CleanArchitecture.Api.FunctionalTests" />
   </ItemGroup>
 
 </Project>

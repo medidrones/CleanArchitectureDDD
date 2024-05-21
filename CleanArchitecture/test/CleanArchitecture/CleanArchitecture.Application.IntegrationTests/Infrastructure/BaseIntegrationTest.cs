@@ -8,13 +8,13 @@ namespace CleanArchitecture.Application.IntegrationTests.Infrastructure;
 public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>
 {
     private readonly IServiceScope _scope;
-    protected readonly ISender sender;
+    protected readonly ISender Sender;
     protected readonly ApplicationDbContext dbContext;
 
     protected BaseIntegrationTest(IntegrationTestWebAppFactory factory)
     {
         _scope = factory.Services.CreateScope();
-        sender = _scope.ServiceProvider.GetRequiredService<ISender>();
+        Sender = _scope.ServiceProvider.GetRequiredService<ISender>();
         dbContext = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     }
 }
