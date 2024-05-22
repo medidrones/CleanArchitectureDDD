@@ -11,6 +11,7 @@ using CleanArchitecture.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Serilog;
+using CleanArchitecture.Infrastructure.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,9 @@ builder.Host.UseSerilog((contex, configuration) => configuration.ReadFrom.Config
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.Configure<GmailSettings>(builder.Configuration.GetSection("GmailSettings"));
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Services.AddTransient<IJwtProvider, JwtProvider>();
 builder.Services.AddAuthorization();

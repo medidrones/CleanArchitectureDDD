@@ -38,8 +38,8 @@ internal sealed class ReservarAlquilerDomainEventHandler : INotificationHandler<
             return;
         }
 
-        await _emailService.SendAsync(
-            user.Email!, 
+        _emailService.Send(
+            user.Email!.Value!, 
             "Alquiler Reservado", 
             "Tienes que confirmar esta reserva de lo contrario se va a perder");
     }
